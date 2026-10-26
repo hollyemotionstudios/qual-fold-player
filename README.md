@@ -10,7 +10,9 @@ the bottom nav are artwork.
 - Opens paused at 0:00. Play runs the progress bar and clock to 3:15, then returns to 0:00.
 - Audio: drop a file named `song.mp3` next to `index.html` and it plays in sync (its length
   replaces 3:15). Without it, a silent timer drives the screen.
-- `?t=85` starts at 1:25, `?play=1` starts playing, `?status=0` hides the fake status bar.
+- `?t=85` starts at 1:25, `?play=1` starts playing.
+- No fake status bar: the strip above the header is left empty for the phone's own time and
+  signal icons.
 - Keys: Space plays/pauses, R resets to 0:00.
 - First tap on a phone goes full screen and keeps the screen awake; Add to Home screen
   launches it full screen.

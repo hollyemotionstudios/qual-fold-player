@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="assets/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400&family=Nunito:wght@600&display=swap" rel="stylesheet">
 <style>
   /* Built from Figma "Music App" (file jO4VrQnb9mAVd7SkmDKv9Y, node 4:9), a 523×847 frame.
      Every size below is in Figma px; JS scales each block by --u to fit the folded (cover) screen. */
@@ -39,14 +39,13 @@
 
   /* three blocks: top bar pinned to the top, nav pinned to the bottom, player centred between */
   .block { position: fixed; left: var(--x); width: 523px; transform: scale(var(--u)); transform-origin: 0 0; }
-  .top { top: 0; height: 90px; }
+  /* the top 50 Figma px stay empty for the phone's own status bar (time, signal, battery);
+     if the device draws the page under a taller status bar, push the header down to clear it */
+  .top { top: max(0px, calc(env(safe-area-inset-top, 0px) - 50px * var(--u))); height: 90px; }
   .mid { top: calc(100px * var(--u) + var(--dy)); height: 630px; }
   .nav { bottom: 0; height: 87px; transform-origin: 0 100%; }
   .abs { position: absolute; }
 
-  /* status bar */
-  .clock { left: 8.5px; top: 14px; width: 56px; font: 400 15px/20px Nunito, sans-serif; letter-spacing: -.24px; text-align: center; }
-  body.no-status .status { display: none; }
 
   /* header */
   .head-title { left: 193px; top: 56.45px; width: 154.71px; font: 400 20px/normal var(--sans); text-align: center; white-space: pre; color: var(--text); }
@@ -90,12 +89,6 @@
   <audio id="audio" src="song.mp3" preload="auto"></audio>
 
   <div class="block top">
-    <div class="status">
-      <div class="abs clock">9:41</div>
-      <img class="abs" src="assets/cellular.svg" alt="" style="left:432.38px;top:19.51px;width:17.77px;height:11.15px">
-      <img class="abs" src="assets/wifi.svg" alt="" style="left:455.37px;top:19.16px;width:16.03px;height:11.5px">
-      <img class="abs" src="assets/battery.svg" alt="" style="left:476.63px;top:19.16px;width:24.74px;height:11.85px">
-    </div>
     <img class="abs" src="assets/arrow-left.svg" alt="" style="left:16px;top:56.45px;width:22.68px;height:25.09px">
     <div class="abs head-title">Jamme Jamme </div>
     <img class="abs" src="assets/heart-top.svg" alt="" style="left:478.37px;top:56.45px;width:22.68px;height:25.09px">
@@ -136,8 +129,6 @@
   const played = document.getElementById('played');
   const nowEl = document.getElementById('now');
   const endEl = document.getElementById('end');
-
-  if (q.get('status') === '0') document.body.classList.add('no-status');
 
   // fit: scale by whichever side is tighter, centre horizontally, give spare height to the player
   function fit() {
