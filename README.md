@@ -11,12 +11,13 @@ the bottom nav are artwork.
 - Audio: drop a file named `song.mp3` next to `index.html` and it plays in sync (its length
   replaces 3:15). Without it, a silent timer drives the screen.
 - `?t=85` starts at 1:25, `?play=1` starts playing.
-- No fake status bar: the strip above the header is left empty for the phone's own time and
-  signal icons.
+- No fake status bar: the strip above the header is left empty, as in the Figma frame.
 - Keys: Space plays/pauses, R resets to 0:00.
-- First tap on a phone keeps the screen awake. It never goes full screen, so the phone's own
-  status bar shows above the header; installed from the home screen it opens without the
-  browser bar (manifest display: standalone).
+- Full screen, no status bar: installed from the home screen it opens full screen (manifest
+  display: fullscreen, falling back to standalone), and in a browser tab the first tap goes
+  full screen. The first tap also keeps the screen awake.
+- sw.js is a pass-through service worker; it's there so Chrome on Android installs the player
+  as a real app (in the app drawer) instead of a home-screen shortcut.
 
 The layout scales the Figma frame to fit any screen: the top bar sticks to the top, the nav to
 the bottom, and the player sits centred between them.
