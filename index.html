@@ -193,6 +193,9 @@
     if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(() => {});
   }, { passive: true });
 
+  // needed for a real install on Android (see sw.js)
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+
   if (q.get('play') === '1') setPlaying(true);
   render();
 </script>
