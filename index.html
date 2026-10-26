@@ -198,10 +198,14 @@
   seek.addEventListener('pointerdown', e => { seek.setPointerCapture(e.pointerId); seekTo(e.clientX); });
   seek.addEventListener('pointermove', e => { if (seek.hasPointerCapture(e.pointerId)) seekTo(e.clientX); });
 
+  // back to the opening state: paused at 0:00
+  function reset() { setPlaying(false); pos = 0; if (hasAudio) audio.currentTime = 0; render(); }
+  document.querySelector('.art').addEventListener('click', reset);
+
   // crew keys: Space plays/pauses, R resets to the start
   addEventListener('keydown', e => {
     if (e.code === 'Space') { e.preventDefault(); setPlaying(!playing); }
-    if (e.key === 'r' || e.key === 'R') { setPlaying(false); pos = 0; if (hasAudio) audio.currentTime = 0; render(); }
+    if (e.key === 'r' || e.key === 'R') reset();
   });
 
   // first touch on a phone: go full screen (hides the status bar in a browser tab too) and keep the screen awake

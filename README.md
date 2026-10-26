@@ -3,8 +3,8 @@
 A one-screen music player for the Galaxy Z Fold 8 folded (cover) screen, built only from the
 "Music App" frame in Figma (file `jO4VrQnb9mAVd7SkmDKv9Y`, node `4:9`, 523×847).
 
-The only things that work are the red play/pause button and the progress bar (tap or drag it
-to jump to any point in the song). Shuffle, skip, repeat, back, heart and
+The only things that work are the red play/pause button, the progress bar (tap or drag it
+to jump to any point in the song) and the album cover (tap it to reset to 0:00, paused). Shuffle, skip, repeat, back, heart and
 the bottom nav are artwork.
 
 - Title: "Funiculì, Funiculà" (the Figma frame says "Jamme Jamme"; changed on request).
