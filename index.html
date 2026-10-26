@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#141112">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Music</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Built from Figma "Music App" (file jO4VrQnb9mAVd7SkmDKv9Y, node 4:9), a 523×847 frame.
+     Every size below is in Figma px; JS scales each block by --u to fit the folded (cover) screen. */
+  :root {
+    --bg: #141112;
+    --text: #f2f2f2;
+    --mute: #8e8e8e;
+    --accent: #e92626;
+    --nav: #090909;
+    --nav-line: #616161;
+    --sans: Aptos, "Albert Sans", system-ui, sans-serif;
+    --u: 1; --x: 0px; --dy: 0px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%; overflow: hidden;
+    background: var(--bg); color: var(--text);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none; user-select: none;
+    touch-action: manipulation;
+  }
+  img { display: block; pointer-events: none; -webkit-user-drag: none; }
+
+  /* three blocks: top bar pinned to the top, nav pinned to the bottom, player centred between */
+  .block { position: fixed; left: var(--x); width: 523px; transform: scale(var(--u)); transform-origin: 0 0; }
+  .top { top: 0; height: 90px; }
+  .mid { top: calc(100px * var(--u) + var(--dy)); height: 630px; }
+  .nav { bottom: 0; height: 87px; transform-origin: 0 100%; }
+  .abs { position: absolute; }
+
+  /* status bar */
+  .clock { left: 8.5px; top: 14px; width: 56px; font: 400 15px/20px Nunito, sans-serif; letter-spacing: -.24px; text-align: center; }
+  body.no-status .status { display: none; }
+
+  /* header */
+  .head-title { left: 193px; top: 56.45px; width: 154.71px; font: 400 20px/normal var(--sans); text-align: center; white-space: pre; color: var(--text); }
+
+  /* album art: Figma crops the 736×981 photo inside a 443×340 rounded box */
+  .art { left: 37px; top: 19px; width: 443px; height: 340px; border-radius: 22px; overflow: hidden; }
+  .art img { position: absolute; left: -7.29%; top: -51.98%; width: 107.32%; height: 185.99%; max-width: none; }
+
+  /* wider than Figma's 282px box so the longer title stays centred on the same axis */
+  .title { left: 43.55px; top: 378px; width: 443px; font: 400 36px/1.33 var(--sans); text-align: center; color: var(--text); white-space: nowrap; }
+  .sub   { left: 124.05px; top: 428px; width: 282px; font: 400 20px/1.33 var(--sans); text-align: center; color: var(--mute); }
+
+  /* progress: 3px lines with round caps, red part glows */
+  .bar { left: 48.72px; top: 483.89px; width: 430.67px; height: 3px; border-radius: 2px; background: var(--text); }
+  .bar i { position: absolute; left: 0; top: 0; height: 3px; width: 0; border-radius: 2px; background: var(--accent);
+           box-shadow: 1px 0 30px rgba(122, 81, 226, .25); }
+  .time { top: 490.34px; font: 600 14px/normal Nunito, sans-serif; color: var(--text); font-variant-numeric: tabular-nums; }
+  .t-now { left: 47.33px; }
+  .t-end { right: 40.92px; text-align: right; }
+
+  /* transport: only the play button does anything */
+  .ctl { top: 567.09px; width: 25.7px; height: 25.09px; }
+  .play {
+    /* the button svg includes its 47px glow, so it sits 47px up/left of the circle */
+    left: 178.94px; top: 495px; width: 173.25px; height: 171.36px;
+    border: 0; background: none; cursor: pointer; outline: none;
+    clip-path: circle(39.6px at 86.63px 85.68px); /* only the circle is tappable */
+  }
+  .play img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .play .i-pause, .playing .play .i-play { display: none; }
+  .playing .play .i-pause { display: block; }
+
+  /* bottom nav */
+  .nav-bg { left: 21px; top: 0; width: 477px; height: 89px; background: var(--nav); border: 1px solid var(--nav-line);
+            border-radius: 40px 40px 0 0; box-shadow: 0 -5px 20px rgba(168, 186, 207, .1); }
+  .nav-i { top: 29px; width: 28.59px; height: 32px; }
+  .nav-music { left: 177.93px; top: 30.67px; width: 30.14px; height: 30.14px; }
+</style>
+</head>
+<body>
+  <audio id="audio" src="song.mp3" preload="auto"></audio>
+
+  <div class="block top">
+    <div class="status">
+      <div class="abs clock">9:41</div>
+      <img class="abs" src="assets/cellular.svg" alt="" style="left:432.38px;top:19.51px;width:17.77px;height:11.15px">
+      <img class="abs" src="assets/wifi.svg" alt="" style="left:455.37px;top:19.16px;width:16.03px;height:11.5px">
+      <img class="abs" src="assets/battery.svg" alt="" style="left:476.63px;top:19.16px;width:24.74px;height:11.85px">
+    </div>
+    <img class="abs" src="assets/arrow-left.svg" alt="" style="left:16px;top:56.45px;width:22.68px;height:25.09px">
+    <div class="abs head-title">Jamme Jamme </div>
+    <img class="abs" src="assets/heart-top.svg" alt="" style="left:478.37px;top:56.45px;width:22.68px;height:25.09px">
+  </div>
+
+  <div class="block mid" id="player">
+    <div class="abs art"><img src="assets/art.jpg" alt=""></div>
+    <div class="abs title">Funiculì, Funiculà</div>
+    <div class="abs sub">Let’s Go</div>
+
+    <div class="abs bar"><i id="played"></i></div>
+    <div class="abs time t-now" id="now">0:00</div>
+    <div class="abs time t-end" id="end">3:15</div>
+
+    <img class="abs ctl" src="assets/shuffle.svg" alt="" style="left:91px">
+    <img class="abs ctl" src="assets/skip-back.svg" alt="" style="left:158.47px">
+    <button class="abs play" id="play" aria-label="Play">
+      <img class="i-play" src="assets/play-button.svg" alt="">
+      <img class="i-pause" src="assets/pause-button.svg" alt="">
+    </button>
+    <img class="abs ctl" src="assets/skip-forward.svg" alt="" style="left:346.97px">
+    <img class="abs ctl" src="assets/repeat.svg" alt="" style="left:414.44px">
+  </div>
+
+  <div class="block nav">
+    <div class="abs nav-bg"></div>
+    <img class="abs nav-i" src="assets/home.svg" alt="" style="left:66px">
+    <img class="abs nav-music" src="assets/music.svg" alt="">
+    <img class="abs nav-i" src="assets/heart-nav.svg" alt="" style="left:311px">
+    <img class="abs nav-i" src="assets/map-pin.svg" alt="" style="left:435px">
+  </div>
+
+<script>
+  const W = 523, H = 847;
+  const q = new URLSearchParams(location.search);
+  const audio = document.getElementById('audio');
+  const playBtn = document.getElementById('play');
+  const played = document.getElementById('played');
+  const nowEl = document.getElementById('now');
+  const endEl = document.getElementById('end');
+
+  if (q.get('status') === '0') document.body.classList.add('no-status');
+
+  // fit: scale by whichever side is tighter, centre horizontally, give spare height to the player
+  function fit() {
+    const vw = innerWidth, vh = innerHeight;
+    const u = Math.min(vw / W, vh / H);
+    const root = document.documentElement.style;
+    root.setProperty('--u', u);
+    root.setProperty('--x', (vw - W * u) / 2 + 'px');
+    root.setProperty('--dy', (vh - H * u) / 2 + 'px');
+  }
+  addEventListener('resize', fit);
+  new ResizeObserver(fit).observe(document.documentElement); // catches fold/unfold and late viewport changes
+  fit();
+
+  // playback: uses song.mp3 if it sits next to this file, otherwise a silent timer drives the UI
+  let duration = 195;            // 3:15, from the Figma frame
+  let pos = Math.max(0, +q.get('t') || 0);
+  let playing = false, hasAudio = false, startedAt = 0, startPos = 0, timer = 0;
+
+  const fmt = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  function render() {
+    played.style.width = (pos / duration * 100) + '%';
+    nowEl.textContent = fmt(pos);
+    endEl.textContent = fmt(duration);
+    document.body.classList.toggle('playing', playing);
+    playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  }
+
+  audio.addEventListener('loadedmetadata', () => {
+    hasAudio = true;
+    duration = audio.duration;
+    audio.currentTime = Math.min(pos, duration);
+    render();
+  });
+  audio.addEventListener('ended', () => { playing = false; pos = 0; audio.currentTime = 0; render(); });
+
+  // position comes from the wall clock (or the audio), so a throttled timer never drifts
+  function tick() {
+    pos = hasAudio ? audio.currentTime : startPos + (Date.now() - startedAt) / 1000;
+    if (pos >= duration) { setPlaying(false); pos = 0; if (hasAudio) audio.currentTime = 0; }
+    render();
+  }
+
+  function setPlaying(on) {
+    playing = on;
+    clearInterval(timer);
+    if (hasAudio) { on ? audio.play().catch(() => {}) : audio.pause(); }
+    if (on) { startPos = pos; startedAt = Date.now(); timer = setInterval(tick, 100); }
+    render();
+  }
+  playBtn.addEventListener('click', () => setPlaying(!playing));
+
+  // crew keys: Space plays/pauses, R resets to the start
+  addEventListener('keydown', e => {
+    if (e.code === 'Space') { e.preventDefault(); setPlaying(!playing); }
+    if (e.key === 'r' || e.key === 'R') { setPlaying(false); pos = 0; if (hasAudio) audio.currentTime = 0; render(); }
+  });
+
+  // first touch on a phone: go full screen and keep the screen awake
+  addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'touch') return;
+    const el = document.documentElement;
+    if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+    if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(() => {});
+  }, { passive: true });
+
+  if (q.get('play') === '1') setPlaying(true);
+  render();
+</script>
+</body>
+</html>
