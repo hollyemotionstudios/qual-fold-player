@@ -7,7 +7,8 @@ The only things that work are the red play/pause button, the progress bar (tap o
 to jump to any point in the song) and the album cover (tap it to reset to 0:00, paused). Shuffle, skip, repeat, back, heart and
 the bottom nav are artwork.
 
-- Title: "Funiculì, Funiculà" (the Figma frame says "Jamme Jamme"; changed on request).
+- Title (big title and header): "Funiculì, Funiculà" (the Figma frame says "Jamme Jamme";
+  changed on request).
 - Opens paused at 0:00. Play runs the progress bar and clock to 3:15, then returns to 0:00.
 - Audio: drop a file named `song.mp3` next to `index.html` and it plays in sync (its length
   replaces 3:15). Without it, a silent timer drives the screen.
