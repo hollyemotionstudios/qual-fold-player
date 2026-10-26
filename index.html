@@ -187,11 +187,9 @@
     if (e.key === 'r' || e.key === 'R') { setPlaying(false); pos = 0; if (hasAudio) audio.currentTime = 0; render(); }
   });
 
-  // first touch on a phone: go full screen and keep the screen awake
+  // first touch on a phone: keep the screen awake (no full screen, so the phone's own status bar stays visible)
   addEventListener('pointerdown', e => {
     if (e.pointerType !== 'touch') return;
-    const el = document.documentElement;
-    if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
     if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(() => {});
   }, { passive: true });
 

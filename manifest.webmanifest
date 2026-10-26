@@ -2,7 +2,7 @@
   "name": "Music",
   "short_name": "Music",
   "start_url": "./",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "background_color": "#141112",
   "theme_color": "#141112",

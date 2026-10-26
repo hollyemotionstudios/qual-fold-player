@@ -14,8 +14,9 @@ the bottom nav are artwork.
 - No fake status bar: the strip above the header is left empty for the phone's own time and
   signal icons.
 - Keys: Space plays/pauses, R resets to 0:00.
-- First tap on a phone goes full screen and keeps the screen awake; Add to Home screen
-  launches it full screen.
+- First tap on a phone keeps the screen awake. It never goes full screen, so the phone's own
+  status bar shows above the header; installed from the home screen it opens without the
+  browser bar (manifest display: standalone).
 
 The layout scales the Figma frame to fit any screen: the top bar sticks to the top, the nav to
 the bottom, and the player sits centred between them.
