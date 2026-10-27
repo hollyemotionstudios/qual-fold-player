@@ -9,7 +9,7 @@ the bottom nav are artwork.
 
 - Title (big title and header): "Jamme, Jamme"; subtitle: "Let’s Go to the Top" (the Figma
   frame says "Jamme Jamme" / "Let’s Go"; changed on request). The album cover is a
-  "Funiculì, Funiculà" poster.
+  "Jamme, Jamme / Napoli · Italia" poster (assets/cover-jamme.jpg).
 - Opens paused at 0:00. Play runs the progress bar and clock to 3:15, then returns to 0:00.
 - Audio: drop a file named `song.mp3` next to `index.html` and it plays in sync (its length
   replaces 3:15). Without it, a silent timer drives the screen.
