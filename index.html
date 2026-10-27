@@ -51,9 +51,10 @@
   /* widened from Figma's 154.71px box and centred on the song title below, so the longer name fits */
   .head-title { left: 65.05px; top: 56.45px; width: 400px; font: 400 20px/normal var(--sans); text-align: center; white-space: pre; color: var(--text); }
 
-  /* album art: Figma crops the 736×981 photo inside a 443×340 rounded box */
-  .art { left: 37px; top: 19px; width: 443px; height: 340px; border-radius: 22px; overflow: hidden; }
-  .art img { position: absolute; left: -7.29%; top: -51.98%; width: 107.32%; height: 185.99%; max-width: none; }
+  /* album art: the square cover keeps Figma's 340px height (its box was 443×340) so the whole cover shows,
+     centred on the title / play button axis */
+  .art { left: 95.05px; top: 19px; width: 340px; height: 340px; border-radius: 3px; overflow: hidden; cursor: pointer; }
+  .art img { width: 100%; height: 100%; object-fit: cover; }
 
   /* wider than Figma's 282px box so the longer title stays centred on the same axis */
   .title { left: 43.55px; top: 378px; width: 443px; font: 400 36px/1.33 var(--sans); text-align: center; color: var(--text); white-space: nowrap; }
@@ -98,7 +99,7 @@
   </div>
 
   <div class="block mid" id="player">
-    <div class="abs art"><img src="assets/art.jpg" alt=""></div>
+    <div class="abs art"><img src="assets/cover.jpg" alt=""></div>
     <div class="abs title">Funiculì, Funiculà</div>
     <div class="abs sub">Let’s Go</div>
 
