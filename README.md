@@ -4,8 +4,8 @@ A one-screen music player for the Galaxy Z Fold 8 folded (cover) screen, built o
 "Music App" frame in Figma (file `jO4VrQnb9mAVd7SkmDKv9Y`, node `4:9`, 523×847).
 
 The only things that work are the red play/pause button, the progress bar (tap or drag it
-to jump to any point in the song) and the album cover (tap it to reset to 0:00, paused). Shuffle, skip, repeat, back, heart and
-the bottom nav are artwork.
+to jump to any point in the song) and the album cover and the home button in the bottom nav (tap either to reset to 0:00, paused). Shuffle, skip, repeat, back, heart and
+the rest of the bottom nav are artwork.
 
 - Title (big title and header): "Jamme, Jamme"; subtitle: "Let’s Go to the Top" (the Figma
   frame says "Jamme Jamme" / "Let’s Go"; changed on request). The album cover is a

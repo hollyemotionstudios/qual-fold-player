@@ -87,6 +87,8 @@
             border-radius: 40px 40px 0 0; box-shadow: 0 -5px 20px rgba(168, 186, 207, .1); }
   .nav-i { top: 29px; width: 28.59px; height: 32px; }
   .nav-music { left: 177.93px; top: 30.67px; width: 30.14px; height: 30.14px; }
+  /* finger-sized target around the home icon; tapping it resets the player */
+  .home { left: 45.3px; top: 10px; width: 70px; height: 70px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -121,6 +123,7 @@
   <div class="block nav">
     <div class="abs nav-bg"></div>
     <img class="abs nav-i" src="assets/home.svg" alt="" style="left:66px">
+    <div class="abs home" id="home" aria-label="Home"></div>
     <img class="abs nav-music" src="assets/music.svg" alt="">
     <img class="abs nav-i" src="assets/heart-nav.svg" alt="" style="left:311px">
     <img class="abs nav-i" src="assets/map-pin.svg" alt="" style="left:435px">
@@ -203,6 +206,7 @@
   // back to the opening state: paused at 0:00
   function reset() { setPlaying(false); pos = 0; if (hasAudio) audio.currentTime = 0; render(); }
   document.querySelector('.art').addEventListener('click', reset);
+  document.getElementById('home').addEventListener('click', reset);
 
   // crew keys: Space plays/pauses, R resets to the start
   addEventListener('keydown', e => {
