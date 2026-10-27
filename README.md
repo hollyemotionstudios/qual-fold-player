@@ -10,9 +10,9 @@ the rest of the bottom nav are artwork.
 - Title (big title and header): "Jamme, Jamme"; subtitle: "Let’s Go to the Top" (the Figma
   frame says "Jamme Jamme" / "Let’s Go"; changed on request). The album cover is a
   "Jamme, Jamme / Napoli · Italia" poster (assets/cover-jamme.jpg).
-- Opens paused at 0:00. Play runs the progress bar and clock to 3:15, then returns to 0:00.
+- Opens paused at 0:00. Play runs the progress bar and clock to 1:34, then returns to 0:00.
 - Audio: drop a file named `song.mp3` next to `index.html` and it plays in sync (its length
-  replaces 3:15). Without it, a silent timer drives the screen.
+  replaces 1:34). Without it, a silent timer drives the screen.
 - `?t=85` starts at 1:25, `?play=1` starts playing.
 - No fake status bar: the strip above the header is left empty, as in the Figma frame.
 - Keys: Space plays/pauses, R resets to 0:00.

@@ -107,7 +107,7 @@
 
     <div class="abs bar"><i id="played"></i></div>
     <div class="abs time t-now" id="now">0:00</div>
-    <div class="abs time t-end" id="end">3:15</div>
+    <div class="abs time t-end" id="end">1:34</div>
     <div class="abs seek" id="seek" aria-label="Seek"></div>
 
     <img class="abs ctl" src="assets/shuffle.svg" alt="" style="left:91px">
@@ -152,7 +152,7 @@
   fit();
 
   // playback: uses song.mp3 if it sits next to this file, otherwise a silent timer drives the UI
-  let duration = 195;            // 3:15, from the Figma frame
+  let duration = 94;             // 1:34 (Figma said 3:15; changed on request)
   let pos = Math.max(0, +q.get('t') || 0);
   let playing = false, hasAudio = false, startedAt = 0, startPos = 0, timer = 0;
 
